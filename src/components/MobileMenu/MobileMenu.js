@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled, { keyframes } from 'styled-components/macro';
 import { DialogOverlay, DialogContent } from '@reach/dialog';
 
 import { QUERIES, WEIGHTS } from '../../constants';
@@ -36,6 +36,24 @@ const MobileMenu = ({ isOpen, onDismiss }) => {
   );
 };
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const flyIn = keyframes`
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
+
 const Overlay = styled(DialogOverlay)`
   position: fixed;
   top: 0;
@@ -45,6 +63,7 @@ const Overlay = styled(DialogOverlay)`
   background: var(--color-backdrop);
   display: flex;
   justify-content: flex-end;
+  animation: ${fadeIn} 300ms backwards;
 `;
 
 const Content = styled(DialogContent)`
@@ -54,6 +73,8 @@ const Content = styled(DialogContent)`
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
+  animation: ${flyIn} 300ms ease-out backwards;
+  animation-delay: 100ms;
 `;
 
 const CloseButton = styled(UnstyledButton)`
@@ -75,9 +96,29 @@ const NavLink = styled.a`
   text-decoration: none;
   font-size: 1.125rem;
   text-transform: uppercase;
+  animation: ${fadeIn} 300ms ease-out backwards;
 
   &:first-of-type {
     color: var(--color-secondary);
+  }
+
+  &:nth-of-type(1) {
+    animation-delay: 300ms;
+  }
+  &:nth-of-type(2) {
+    animation-delay: 350ms;
+  }
+  &:nth-of-type(3) {
+    animation-delay: 400ms;
+  }
+  &:nth-of-type(4) {
+    animation-delay: 450ms;
+  }
+  &:nth-of-type(5) {
+    animation-delay: 500ms;
+  }
+  &:nth-of-type(6) {
+    animation-delay: 550ms;
   }
 `;
 
@@ -90,6 +131,8 @@ const Footer = styled.footer`
   flex-direction: column;
   gap: 14px;
   justify-content: flex-end;
+  animation: ${fadeIn} 300ms ease-out backwards;
+  animation-delay: 300ms;
 `;
 
 const SubLink = styled.a`

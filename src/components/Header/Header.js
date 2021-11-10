@@ -9,6 +9,51 @@ import SuperHeader from '../SuperHeader';
 import MobileMenu from '../MobileMenu';
 import VisuallyHidden from '../VisuallyHidden';
 
+const NavLink = ({ children, ...props }) => {
+  return (
+    <LinkWrapper {...props}>
+      <MainLink>{children}</MainLink>
+      <HoverLink>{children}</HoverLink>
+    </LinkWrapper>
+  );
+};
+
+const MainLink = styled.div`
+  position: relative;
+  transition: transform 200ms;
+`;
+
+const HoverLink = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: bold;
+  transform: translateY(100%);
+  transition: transform 200ms;
+`;
+
+const LinkWrapper = styled.a`
+  position: relative;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-gray-900);
+  font-weight: ${WEIGHTS.medium};
+  overflow: hidden;
+
+  &:first-of-type {
+    color: var(--color-secondary);
+  }
+
+  &:hover ${MainLink} {
+    transform: translateY(-100%);
+  }
+
+  &:hover ${HoverLink} {
+    transform: translateY(0);
+  }
+`;
+
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
 
@@ -44,10 +89,7 @@ const Header = () => {
         <Filler />
       </MainHeader>
 
-      <MobileMenu
-        isOpen={showMobileMenu}
-        onDismiss={() => setShowMobileMenu(false)}
-      />
+      <MobileMenu isOpen={showMobileMenu} onDismiss={() => setShowMobileMenu(false)} />
     </header>
   );
 };
@@ -111,18 +153,6 @@ const Filler = styled.div`
 
   @media ${QUERIES.tabletAndSmaller} {
     display: none;
-  }
-`;
-
-const NavLink = styled.a`
-  font-size: 1.125rem;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--color-gray-900);
-  font-weight: ${WEIGHTS.medium};
-
-  &:first-of-type {
-    color: var(--color-secondary);
   }
 `;
 

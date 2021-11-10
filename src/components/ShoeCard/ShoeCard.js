@@ -5,15 +5,7 @@ import { WEIGHTS } from '../../constants';
 import { formatPrice, pluralize, isNewShoe } from '../../utils';
 import Spacer from '../Spacer';
 
-const ShoeCard = ({
-  slug,
-  name,
-  imageSrc,
-  price,
-  salePrice,
-  releaseDate,
-  numOfColors,
-}) => {
+const ShoeCard = ({ slug, name, imageSrc, price, salePrice, releaseDate, numOfColors }) => {
   // There are 3 variants possible, based on the props:
   //   - new-release
   //   - on-sale
@@ -35,23 +27,19 @@ const ShoeCard = ({
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
-          <Image alt="" src={imageSrc} />
+          <ShoeWrapper>
+            <Image alt="" src={imageSrc} />
+          </ShoeWrapper>
           {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
-          {variant === 'new-release' && (
-            <NewFlag>Just released!</NewFlag>
-          )}
+          {variant === 'new-release' && <NewFlag>Just released!</NewFlag>}
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
           <Price
             style={{
-              '--color':
-                variant === 'on-sale'
-                  ? 'var(--color-gray-700)'
-                  : undefined,
-              '--text-decoration':
-                variant === 'on-sale' ? 'line-through' : undefined,
+              '--color': variant === 'on-sale' ? 'var(--color-gray-700)' : undefined,
+              '--text-decoration': variant === 'on-sale' ? 'line-through' : undefined,
             }}
           >
             {formatPrice(price)}
@@ -59,9 +47,7 @@ const ShoeCard = ({
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
-          {variant === 'on-sale' ? (
-            <SalePrice>{formatPrice(salePrice)}</SalePrice>
-          ) : undefined}
+          {variant === 'on-sale' ? <SalePrice>{formatPrice(salePrice)}</SalePrice> : undefined}
         </Row>
       </Wrapper>
     </Link>
@@ -75,13 +61,24 @@ const Link = styled.a`
 
 const Wrapper = styled.article``;
 
+const Image = styled.img`
+  width: 100%;
+  transition: transform 500ms;
+  transform-origin: bottom;
+`;
+
 const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img`
-  width: 100%;
+const ShoeWrapper = styled.div`
   border-radius: 16px 16px 4px 4px;
+  overflow: hidden;
+
+  &:hover ${Image} {
+    transform: scale(1.1);
+    transition: transform 200ms;
+  }
 `;
 
 const Row = styled.div`
